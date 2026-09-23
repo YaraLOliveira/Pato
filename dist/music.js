@@ -5,29 +5,39 @@ const musicEngine=(()=>{
   const Audio=window.AudioContext||window.webkitAudioContext;
   const romanceAudio=document.createElement('audio');
   romanceAudio.src='assets/mood.mp3';romanceAudio.loop=true;romanceAudio.preload='auto';
+  // Volume da música do Romântico (mood.mp3, com o saxofone). 0 = mudo, 1 = original.
+  const ROMANCE_VOLUME=.35;
+  romanceAudio.volume=ROMANCE_VOLUME;
+  // A faixa passa pelo Web Audio para o volume funcionar também no iPhone (lá o volume do <audio> é ignorado).
+  let romanceGain=null;
+  function routeRomance(){
+    if(romanceGain||!ctx)return;
+    try{const src=ctx.createMediaElementSource(romanceAudio);romanceGain=ctx.createGain();romanceGain.gain.value=ROMANCE_VOLUME;src.connect(romanceGain);romanceGain.connect(ctx.destination);romanceAudio.volume=1}catch(e){romanceGain=null}
+  }
   // A música do Romântico some com um fade curto (sem corte seco) quando outro botão é tocado.
-  let romanceFade=null;
+  let romanceStop=null;
   function stopRomance(){
-    clearInterval(romanceFade);
+    clearTimeout(romanceStop);
     if(romanceAudio.paused){romanceAudio.currentTime=0;return}
-    romanceFade=setInterval(()=>{
-      const v=romanceAudio.volume-.12;
-      if(v<=0.02){clearInterval(romanceFade);romanceFade=null;romanceAudio.pause();romanceAudio.volume=1;romanceAudio.currentTime=0}
-      else romanceAudio.volume=v;
-    },30);
-    // Safari do iPhone ignora o volume: garante que pare mesmo assim.
-    setTimeout(()=>{if(romanceFade&&romanceAudio.volume===1){clearInterval(romanceFade);romanceFade=null;romanceAudio.pause();romanceAudio.currentTime=0}},60);
+    if(romanceGain){const now=ctx.currentTime,g=romanceGain.gain;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(0,now+.3)}
+    else romanceAudio.volume=ROMANCE_VOLUME*.4;
+    romanceStop=setTimeout(()=>{romanceStop=null;romanceAudio.pause();romanceAudio.currentTime=0},320);
   }
   function playRomance(){
-    if(romanceFade){clearInterval(romanceFade);romanceFade=null;romanceAudio.volume=1}
+    if(romanceStop){clearTimeout(romanceStop);romanceStop=null}
+    if(Audio&&!muted){if(!ctx)ctx=new Audio();if(ctx.state!=='running')ctx.resume().catch(()=>{});routeRomance()}
+    if(romanceGain){const now=ctx.currentTime,g=romanceGain.gain;g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(ROMANCE_VOLUME,now+.25)}
+    else romanceAudio.volume=ROMANCE_VOLUME;
     if(muted||!romanceAudio.paused)return;
     const attempt=romanceAudio.play();
     attempt?.catch?.(()=>document.dispatchEvent(new Event('romance-audio-error')));
-  }
-  romanceAudio.addEventListener('error',()=>document.dispatchEvent(new Event('romance-audio-error')));
+  }  romanceAudio.addEventListener('error',()=>document.dispatchEvent(new Event('romance-audio-error')));
   const notes=[261.63,220,174.61,196];
   // Saída única: filtro suave + compressor, para nada estourar quando vários sons tocam juntos.
-  let master=null;
+  // Volume dos efeitos dos botões (0 = mudo, 1 = original). Ajuste aqui se quiser mais alto ou mais baixo.
+  const SFX_VOLUME=.35;
+  let master=null,sfxBus=null;
+  function fx(){if(!sfxBus){sfxBus=ctx.createGain();sfxBus.gain.value=SFX_VOLUME;sfxBus.connect(out())}return sfxBus}
   function out(){
     if(!master){const lp=ctx.createBiquadFilter(),comp=ctx.createDynamicsCompressor();lp.type='lowpass';lp.frequency.value=7000;lp.Q.value=.5;
       comp.threshold.value=-20;comp.knee.value=18;comp.ratio.value=5;comp.attack.value=.004;comp.release.value=.25;
@@ -63,15 +73,17 @@ const musicEngine=(()=>{
     osc.frequency.setValueAtTime(f0,time);osc.frequency.exponentialRampToValueAtTime(f1,time+duration);
     const stop=env(gain.gain,time,volume,duration,.025);
     if(vibRate){const lfo=ctx.createOscillator(),depth=ctx.createGain();lfo.frequency.value=vibRate;depth.gain.value=vibDepth;lfo.connect(depth).connect(osc.frequency);lfo.start(time);lfo.stop(stop)}
-    osc.connect(gain).connect(out());osc.start(time);osc.stop(stop);
-  }  const musicBox=[523.25,659.25,783.99,987.77,880,783.99,659.25,587.33,523.25,659.25,783.99,1046.5,987.77,783.99,698.46,659.25];
+    osc.connect(gain).connect(fx());osc.start(time);osc.stop(stop);
+  }  // Coração: acordes macios e lentos (Fmaj7 → Em7 → Dm7 → Cmaj7) com melodia espaçada.
+  const meltChords=[[174.61,220,261.63,329.63],[164.81,196,246.94,293.66],[146.83,174.61,220,261.63],[130.81,164.81,196,246.94]];
+  const meltBass=[87.31,82.41,73.42,65.41];
+  const meltMelody={2:440,6:392,10:392,14:329.63,18:349.23,21:440,26:329.63};
   const flirtBass=[110,130.81,146.83,164.81,146.83,130.81,123.47,103.83];
   function schedule(time){
     if(track==='melt'){
-      const down=1-warp*.3,wobble=warp*38*Math.sin(step*.9);
-      note(musicBox[step%16]*down,time,.55+warp*.5,.05,'triangle',bus,wobble);
-      if(step%8===0)note(130.81*down,time,1.4,.04,'sine',bus,wobble);
-      if(step%8===4)note(196*down,time,1.2,.03,'sine',bus,wobble);
+      const down=1-warp*.12,wobble=warp*18*Math.sin(step*.7),bar=Math.floor(step/8)%4,pos=step%32;
+      if(step%8===0){meltChords[bar].forEach(f=>note(f*down,time,3.9,.016,'sine',bus,wobble,.6));note(meltBass[bar]*down,time,3.6,.03,'sine',bus,0,.3)}
+      if(meltMelody[pos])note(meltMelody[pos]*down,time,1.3,.02,'sine',bus,wobble,.09);
     }else if(track==='romance'){
       const chord=step%16,root=notes[Math.floor(chord/4)%4];
       if(chord%4===0){[1,1.26,1.5].forEach((ratio,i)=>note(root*ratio,time,1.65,.055-i*.009));note(root/2,time,1.2,.033,'sine')}
@@ -83,8 +95,8 @@ const musicEngine=(()=>{
     }else if(track==='flirt'){
       if(step%2===0)note(flirtBass[(step/2)%8],time,.55,.06,'sine',bus,0,.07);
       if(step%8===4)note(220,time,.5,.025,'sine',bus,0,.06);
-      if(step%16===7){note(440,time,.3,.022,'sine',bus,0,.05);note(415.3,time+.2,.5,.022,'sine',bus,0,.05)}
-      if(step%16===15)note(659.25,time,.6,.018,'sine',bus,0,.06);
+      if(step%16===7){note(440,time,.3,.012,'sine',bus,0,.05);note(415.3,time+.2,.5,.012,'sine',bus,0,.05)}
+      if(step%16===15)note(659.25,time,.6,.01,'sine',bus,0,.06);
     }else if(track==='club-muted'||track==='club'){
       const quiet=track==='club-muted',level=quiet?.65:1;
       if(step%2===0)kick(time,.14*level);
@@ -94,7 +106,7 @@ const musicEngine=(()=>{
     }
     step++;
   }
-  function intervalFor(name){return name==='melt'?60/100/2*(1+warp*.7):name==='work'?.45:name==='flirt'?.3:name==='romance'?60/90:60/112/2}
+  function intervalFor(name){return name==='melt'?.45*(1+warp*.4):name==='work'?.45:name==='flirt'?.3:name==='romance'?60/90:60/112/2}
   function fadeOut(){if(!bus||!ctx)return;const old=bus,now=ctx.currentTime;old.gain.cancelScheduledValues(now);old.gain.setValueAtTime(old.gain.value,now);old.gain.linearRampToValueAtTime(0,now+.18);setTimeout(()=>old.disconnect(),400)}
   function change(name){
     if(name===track&&(!name||timer)){
@@ -122,7 +134,7 @@ const musicEngine=(()=>{
     if(!ctx)return;
     if(fire>0&&!muted){
       if(!rumble){const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=noise();src.loop=true;filter.type='lowpass';filter.frequency.value=420;gain.gain.value=0;src.connect(filter).connect(gain).connect(out());src.start();rumble={src,gain}}
-      const now=ctx.currentTime;rumble.gain.gain.cancelScheduledValues(now);rumble.gain.gain.setValueAtTime(rumble.gain.gain.value,now);rumble.gain.gain.linearRampToValueAtTime(.07*fire,now+.4);
+      const now=ctx.currentTime;rumble.gain.gain.cancelScheduledValues(now);rumble.gain.gain.setValueAtTime(rumble.gain.gain.value,now);rumble.gain.gain.linearRampToValueAtTime(.035*fire,now+.4);
     }else if(rumble){const old=rumble,now=ctx.currentTime;rumble=null;old.gain.gain.cancelScheduledValues(now);old.gain.gain.setValueAtTime(old.gain.gain.value,now);old.gain.gain.linearRampToValueAtTime(0,now+.3);setTimeout(()=>old.src.stop(),450)}
   }
   function setFire(level){fire=level;if(level>0&&!ctx&&Audio&&!muted)ctx=new Audio();updateRumble()}
@@ -146,13 +158,13 @@ const musicEngine=(()=>{
   document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ctx&&ctx.state!=='running'&&!muted)ctx.resume().catch(()=>{})});
   function playEffect(freq=520,duration=.08){
     if(track==='romance')return;
-    try{if(ready())note(freq,ctx.currentTime+.02,Math.max(.12,duration),.05,'triangle',out())}catch(e){}
+    try{if(ready())note(freq,ctx.currentTime+.02,Math.max(.12,duration),.03,'sine',fx())}catch(e){}
   }
   // Efeitos sonoros com nome: tocam por cima de qualquer música.
   function sfx(name){
     try{
-      if(!ready())return;const t=ctx.currentTime+.02,o=out();
-      if(name==='melt'){slide(t,880,150,1.6,.1,'sine',6,28);slide(t+1.55,220,90,.35,.08,'sine');hiss(t+1.6,.3,.04,500,'lowpass')}
+      if(!ready())return;const t=ctx.currentTime+.02,o=fx();
+      if(name==='melt'){slide(t,880,150,1.6,.1,'sine',6,28);slide(t+1.55,220,90,.35,.08,'sine');hiss(t+1.6,.3,.04,500,'lowpass',1,o)}
       else if(name==='soften'){slide(t,660,330,.7,.07,'sine',7,18)}
       else if(name==='boing'){slide(t,130,620,.32,.12,'triangle',16,40);slide(t+.3,620,380,.25,.06,'triangle',12,20)}
       else if(name==='beat'){kick(t,.3,o);kick(t+.2,.2,o)}
