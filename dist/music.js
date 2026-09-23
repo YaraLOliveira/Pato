@@ -5,7 +5,21 @@ const musicEngine=(()=>{
   const Audio=window.AudioContext||window.webkitAudioContext;
   const romanceAudio=document.createElement('audio');
   romanceAudio.src='assets/mood.mp3';romanceAudio.loop=true;romanceAudio.preload='auto';
+  // A música do Romântico some com um fade curto (sem corte seco) quando outro botão é tocado.
+  let romanceFade=null;
+  function stopRomance(){
+    clearInterval(romanceFade);
+    if(romanceAudio.paused){romanceAudio.currentTime=0;return}
+    romanceFade=setInterval(()=>{
+      const v=romanceAudio.volume-.12;
+      if(v<=0.02){clearInterval(romanceFade);romanceFade=null;romanceAudio.pause();romanceAudio.volume=1;romanceAudio.currentTime=0}
+      else romanceAudio.volume=v;
+    },30);
+    // Safari do iPhone ignora o volume: garante que pare mesmo assim.
+    setTimeout(()=>{if(romanceFade&&romanceAudio.volume===1){clearInterval(romanceFade);romanceFade=null;romanceAudio.pause();romanceAudio.currentTime=0}},60);
+  }
   function playRomance(){
+    if(romanceFade){clearInterval(romanceFade);romanceFade=null;romanceAudio.volume=1}
     if(muted||!romanceAudio.paused)return;
     const attempt=romanceAudio.play();
     attempt?.catch?.(()=>document.dispatchEvent(new Event('romance-audio-error')));
@@ -84,14 +98,14 @@ const musicEngine=(()=>{
   function fadeOut(){if(!bus||!ctx)return;const old=bus,now=ctx.currentTime;old.gain.cancelScheduledValues(now);old.gain.setValueAtTime(old.gain.value,now);old.gain.linearRampToValueAtTime(0,now+.18);setTimeout(()=>old.disconnect(),400)}
   function change(name){
     if(name===track&&(!name||timer)){
-      if(ctx?.state==='suspended'&&!muted)ctx.resume().catch(()=>{});
+      if(ctx&&ctx.state!=='running'&&!muted)ctx.resume().catch(()=>{});
       return;
     }
     if(name===track&&name==='romance'){playRomance();return}
-    if(track==='romance'&&name!=='romance'){romanceAudio.pause();romanceAudio.currentTime=0}
+    if(track==='romance'&&name!=='romance')stopRomance();
     if(!name&& !ctx){track=null;return}
     if(name&&name!=='romance'&&!muted&&!ctx&&Audio)ctx=new Audio();
-    if(ctx?.state==='suspended'&&!muted)ctx.resume().catch(()=>{});
+    if(ctx&&ctx.state!=='running'&&!muted)ctx.resume().catch(()=>{});
     clearInterval(timer);timer=null;fadeOut();track=name;bus=null;
     if(name==='romance'){playRomance();return}
     if(!name||muted||!ctx)return;
@@ -114,7 +128,22 @@ const musicEngine=(()=>{
   function setFire(level){fire=level;if(level>0&&!ctx&&Audio&&!muted)ctx=new Audio();updateRumble()}
   function setWarp(value){warp=value}
   function setMuted(value){muted=value;if(value){romanceAudio.pause();clearInterval(timer);timer=null;fadeOut();bus=null}else{const current=track;track=null;change(current)}updateRumble()}
-  function ready(){if(muted||!Audio)return false;if(!ctx)ctx=new Audio();if(ctx.state==='suspended')ctx.resume().catch(()=>{});return true}
+  function ready(){if(muted||!Audio)return false;if(!ctx)ctx=new Audio();if(ctx.state!=='running')ctx.resume().catch(()=>{});return true}
+  // iPhone/Safari: o áudio só é liberado dentro de um toque. No primeiro toque criamos o contexto,
+  // tocamos um som mudo e pedimos para tocar mesmo com a chave de silencioso ligada.
+  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+  let unlocked=false;
+  function unlock(){
+    if(!Audio||muted||(unlocked&&ctx?.state==='running'))return;
+    try{
+      if(!ctx)ctx=new Audio();
+      if(ctx.state!=='running')ctx.resume().catch(()=>{});
+      const silent=ctx.createBufferSource();silent.buffer=ctx.createBuffer(1,1,22050);silent.connect(ctx.destination);silent.start(0);unlocked=true;
+    }catch(e){}
+  }
+  ['touchend','click','keydown'].forEach(type=>document.addEventListener(type,unlock,{capture:true,passive:true}));
+  // Ao voltar para a aba (ou depois de uma ligação no iPhone), religa o som.
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ctx&&ctx.state!=='running'&&!muted)ctx.resume().catch(()=>{})});
   function playEffect(freq=520,duration=.08){
     if(track==='romance')return;
     try{if(ready())note(freq,ctx.currentTime+.02,Math.max(.12,duration),.05,'triangle',out())}catch(e){}
