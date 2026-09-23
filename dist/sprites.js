@@ -1,14 +1,22 @@
 // Arte original do patinho em todas as cenas; altere este mapa para usar um PNG novo.
+// Objetos pequenos (buquê, caneca, rosa...) ficam em scenes.js → sprites.
 const spriteFiles={
+  // ♥ Coração — Derretendo de Amor (o derretimento é feito em cima deste PNG, sem alterá-lo)
+  'melt-blush':'assets/patinho.png','melt-beat':'assets/patinho.png','melt-soft':'assets/patinho.png',
+  'melt-puddle':'assets/patinho.png','melt-reform':'assets/patinho.png',
+  // ▣ Trabalho — Tá Tudo Bem
+  'work-monday':'assets/patinho.png','work-email':'assets/patinho.png','work-meeting':'assets/patinho.png',
+  'work-fine':'assets/patinho.png','work-friday':'assets/patinho.png',
+  // ✦ Safado — O Galanteador
+  'flirt-arrive':'assets/patinho.png','flirt-reveal':'assets/patinho.png','flirt-rose':'assets/patinho.png',
+  'flirt-serenade':'assets/patinho.png','flirt-petals':'assets/patinho.png',
+  // 🍷 Romântico — O Encontro
   'heart-invite':'assets/patinho.png','heart-ready':'assets/patinho.png',
-  'heart-dinner':'assets/patinho-romantico.png','heart-music':'assets/patinho-romantico.png',
-  'heart-dance':'assets/patinho-romantico.png','heart-moon':'assets/patinho.png',
-  'work-late':'assets/patinho.png','work-meeting':'assets/patinho.png',
-  'work-coffee':'assets/patinho.png','work-overtime':'assets/patinho.png','work-friday':'assets/patinho.png',
-  'night-queue':'assets/patinho.png','night-security':'assets/patinho.png',
-  'night-entered':'assets/patinho.png','night-dancefloor':'assets/patinho.png','night-charm':'assets/patinho.png',
-  'secretLove':'assets/patinho-romantico.png','secretChaos':'assets/patinho.png',
-  'secretWink':'assets/patinho.png','romantic-toast':'assets/patinho-romantico.png','guard':null
+  'heart-dinner':'assets/patinho-romantico.png','romantic-toast':'assets/patinho-romantico.png',
+  'heart-music':'assets/patinho-romantico.png','heart-dance':'assets/patinho-romantico.png','heart-moon':'assets/patinho.png',
+  // Momentos secretos
+  'secretLove':'assets/patinho-romantico.png','secretChaos':'assets/patinho.png','secretWink':'assets/patinho.png',
+  'guard':null
 };
 const spriteStyles={
   'heart-invite':{eyes:'down',cheeks:true,flower:true},'heart-ready':{eyes:'open',bow:true,sparkle:true},

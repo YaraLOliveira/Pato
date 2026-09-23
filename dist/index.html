@@ -14,7 +14,7 @@
     body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);background-size:4px 4px;mix-blend-mode:overlay}
     button{font:inherit}.shell{width:100%;min-height:100svh;margin:auto;padding:16px;display:grid;place-items:center;background:#07071a}
     .top{position:absolute;z-index:20;top:16px;left:18px;right:18px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;pointer-events:none}.brand{font:clamp(14px,2vw,22px)/1.35 "Press Start 2P";text-shadow:3px 3px 0 #7b3e73;margin:0}.icon-btn{width:46px;height:42px;border:3px solid #0d0925;background:#4a387c;color:#fff;border-radius:0;box-shadow:0 5px 0 #0d0925;cursor:pointer;font-size:23px;pointer-events:auto}.icon-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #0d0925}
-    .hud{position:absolute;z-index:18;top:14px;left:220px;right:78px;display:grid;grid-template-columns:minmax(180px,.8fr) minmax(220px,1fr);gap:10px;pointer-events:none}.panel{border:3px solid #0d0925;background:#241b4bd9;box-shadow:inset 0 0 0 2px #6a55a2,0 4px 0 #0d0925;padding:7px 10px;backdrop-filter:blur(3px);pointer-events:auto}.tiny{font-size:14px;letter-spacing:.04em;color:#d9cdee}.count{font-size:19px;color:#fff;white-space:nowrap}.bar{height:10px;margin-top:4px;border:2px solid #0d0925;background:#15102f;overflow:hidden}.fill{height:100%;width:calc(var(--mood)*1%);background:linear-gradient(90deg,#83e6e5,#ffd84a,#ff8fba);transition:width .35s steps(6)}
+    .hud{position:absolute;z-index:18;top:14px;left:220px;right:132px;display:grid;grid-template-columns:minmax(180px,.8fr) minmax(220px,1fr);gap:10px;pointer-events:none}.panel{border:3px solid #0d0925;background:#241b4bd9;box-shadow:inset 0 0 0 2px #6a55a2,0 4px 0 #0d0925;padding:7px 10px;backdrop-filter:blur(3px);pointer-events:auto}.tiny{font-size:14px;letter-spacing:.04em;color:#d9cdee}.count{font-size:19px;color:#fff;white-space:nowrap}.bar{height:10px;margin-top:4px;border:2px solid #0d0925;background:#15102f;overflow:hidden}.fill{height:100%;width:calc(var(--mood)*1%);background:linear-gradient(90deg,#83e6e5,#ffd84a,#ff8fba);transition:width .35s steps(6)}
     .stage{--scene-sky:#09091f;--scene-floor:#111122;--light-a:rgba(111,92,202,.38);--light-b:rgba(255,147,104,.18);--light-a-x:36%;--light-a-y:42%;--light-b-x:70%;--light-b-y:58%;position:relative;width:min(100%,960px);aspect-ratio:16/9;min-height:470px;display:grid;place-items:center;border:4px solid #050511;background:linear-gradient(var(--scene-sky) 0 67%,var(--scene-floor) 67%);box-shadow:inset 0 0 0 3px #272746,0 7px 0 #02020b,0 0 80px #000b;overflow:hidden;isolation:isolate;transition:background .3s steps(4),box-shadow .3s steps(4)}.stage:after{content:"";position:absolute;z-index:2;left:0;right:0;bottom:0;height:34%;opacity:.58;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent 28%),repeating-linear-gradient(90deg,rgba(112,112,150,.055) 0 1px,transparent 1px 58px);box-shadow:inset 0 10px 26px #0005;pointer-events:none}.stage[data-mood="heart"]{--scene-sky:#160d24;--scene-floor:#15101d;--light-a:rgba(255,116,168,.34);--light-b:rgba(255,191,110,.25);--light-a-x:40%;--light-a-y:46%;--light-b-x:66%;--light-b-y:58%}.stage[data-mood="work"]{--scene-sky:#070d1d;--scene-floor:#0c121b;--light-a:rgba(82,179,255,.34);--light-b:rgba(150,210,255,.16);--light-a-x:58%;--light-a-y:34%;--light-b-x:34%;--light-b-y:64%}.stage[data-mood="naughty"]{--scene-sky:#100817;--scene-floor:#130c18;--light-a:rgba(164,73,255,.38);--light-b:rgba(255,70,137,.25);--light-a-x:28%;--light-a-y:48%;--light-b-x:72%;--light-b-y:42%}.stage.romantic-scene{--scene-sky:#160713;--scene-floor:#130a11;--light-a:rgba(255,161,91,.46);--light-b:rgba(169,37,98,.34);--light-a-x:52%;--light-a-y:58%;--light-b-x:72%;--light-b-y:36%;box-shadow:inset 0 0 0 3px #512038,0 7px 0 #02020b,0 0 80px #000b}.light-layer{position:absolute;z-index:1;inset:0;background:radial-gradient(circle at var(--light-a-x) var(--light-a-y),var(--light-a) 0,transparent 34%),radial-gradient(circle at var(--light-b-x) var(--light-b-y),var(--light-b) 0,transparent 30%);mix-blend-mode:screen;pointer-events:none;transition:background .3s steps(4)}.vignette{position:absolute;z-index:10;inset:-2px;box-shadow:inset 0 0 105px 34px rgba(1,1,10,.88);pointer-events:none}
     .stage[data-scene="sunset"]{--scene-sky:#3b173d;--scene-floor:#18101c}.stage[data-scene="mirror"],.stage[data-scene="bedroom"]{--scene-sky:#0c1021;--scene-floor:#10111b}.stage[data-scene="dinner"]{--scene-sky:#210912;--scene-floor:#160b10}.stage[data-scene="music"],.stage[data-scene="dance"]{--scene-sky:#16091f;--scene-floor:#100a17}.stage[data-scene="moon"]{--scene-sky:#070d25;--scene-floor:#090d18}.stage[data-scene="meeting"],.stage[data-scene="overtime"]{--scene-sky:#06101b;--scene-floor:#091017}.stage[data-scene="coffee"]{--scene-sky:#17100a;--scene-floor:#11100d}.stage[data-scene="friday"]{--scene-sky:#0d1720;--scene-floor:#0b1215}.stage[data-scene="queue"],.stage[data-scene="security"]{--scene-sky:#12081b;--scene-floor:#110d14}.stage[data-scene="entered"],.stage[data-scene="dancefloor"],.stage[data-scene="bar"]{--scene-sky:#170722;--scene-floor:#0e0914}
     .speech{position:absolute;z-index:12;top:86px;right:5%;width:clamp(300px,44%,430px);min-height:72px;padding:11px 15px;background:var(--paper);color:#392650;border:4px solid #140e2d;box-shadow:6px 6px 0 #140e2d;font-size:22px;line-height:1.04;display:flex;align-items:center}.speech:after{content:"";position:absolute;right:24%;bottom:-20px;width:20px;height:20px;background:#140e2d;clip-path:polygon(0 0,100% 0,100% 40%,70% 40%,70% 70%,40% 70%,40% 100%,0 100%)}.cursor{display:inline-block;width:7px;height:20px;background:#8b4672;margin-left:4px;animation:cursor .7s steps(1) infinite}
@@ -34,18 +34,106 @@
     .story-progress:empty{display:none}.icon-btn.muted{background:#322d4c;color:#bcb3d1}.fill{background:var(--mood-color,#83e6e5)}
     .secrets{align-items:center;color:#e8d7a8;font-size:15px}.scene-character{width:96px;height:96px;image-rendering:pixelated}.scene-prop[data-prop="crush"]{left:auto;right:8%;top:auto;bottom:10%}.scene-prop[data-prop="petals"]{color:#ff8fba;animation:petalFall 2s linear infinite}.scene-prop[data-prop="petals"]::before,.scene-prop[data-prop="petals"]::after{content:'✿';position:absolute;color:#ffb4cd;animation:petalFall 2.5s linear infinite}.scene-prop[data-prop="petals"]::before{left:-90px;animation-delay:.7s}.scene-prop[data-prop="petals"]::after{left:80px;animation-delay:1.3s}.petal-scene .light-layer{filter:brightness(1.15)}
     .stage[data-scene] .facefx,.stage[data-scene] .accessory{display:none}
-    .stage[data-scene="music"] .duck-wrap:not(.squash),.stage[data-scene="dance"] .duck-wrap:not(.squash){animation:slowDance .667s ease-in-out infinite alternate}.stage[data-scene="meeting"] .duck-wrap:not(.squash){animation:meetingNod 2.7s steps(6) infinite}.stage[data-scene="coffee"] .duck-wrap:not(.squash){animation:coffeeBuzz .23s steps(2) infinite}.stage[data-scene="dancefloor"] .duck-wrap:not(.squash){animation:slowDance .268s steps(2) infinite alternate}
     @keyframes slowDance{to{transform:rotate(3deg) translateY(-3px)}}@keyframes meetingNod{70%{transform:rotate(8deg) translateY(5px)}85%{transform:rotate(-2deg)}}@keyframes coffeeBuzz{to{transform:translateX(2px)}}@keyframes petalFall{from{transform:translateY(-85px);opacity:0}30%{opacity:1}to{transform:translateY(170px) rotate(45deg);opacity:0}}
     @media(max-width:700px){.scene-meta{gap:5px}.secrets{white-space:nowrap}}
     @media(max-width:370px){.secrets{font-size:13px}}
+  </style>
+  <style>
+    /* Cenários em pixel art, fogo e derretimento */
+    .backdrop{position:absolute;z-index:0;inset:0;width:100%;height:100%;image-rendering:pixelated;pointer-events:none}
+    .fire{position:absolute;z-index:3;left:0;right:0;bottom:22%;width:100%;height:62%;image-rendering:pixelated;pointer-events:none;opacity:.95}
+    .stage.on-fire{cursor:crosshair}.stage.on-fire .light-layer{animation:fireFlicker .45s steps(3) infinite}
+    .duck-wrap{aspect-ratio:1224/1285;height:auto;max-height:none}
+    .melt{position:absolute;z-index:2;inset:0;width:100%;height:100%;image-rendering:pixelated;display:none;pointer-events:none}
+    .duck-wrap.melting .melt{display:block}.duck-wrap.melting .duck{visibility:hidden}.duck-wrap.melting .duck-reflection,.duck-wrap.melting .held{opacity:0}
+    .held{position:absolute;inset:0;pointer-events:none;transition:opacity .2s}.held.back{z-index:1}.held.front{z-index:3}
+    .held-item{position:absolute;width:calc(var(--w)*1.6%);image-rendering:pixelated;transform-origin:50% 100%;filter:drop-shadow(0 2px 0 #1a0c1c)}
+    .held-bouquet{left:64%;top:34%;transform:rotate(10deg);pointer-events:auto;cursor:pointer;animation:bouquetBob 1.6s steps(4) infinite}
+    .held-bouquet-back{left:22%;top:34%;transform:rotate(-38deg)}
+    .held-rose{left:51%;top:40.5%}
+    .held-mug{left:17%;top:41%}
+    .held-phone{left:31%;top:28%;transform:rotate(-12deg)}
+    .held-tulip-back{left:73%;top:39%;transform:rotate(16deg)}
+    /* Animações do patinho por momento (a arte não muda, só o movimento) */
+    .duck-wrap.anim-sway:not(.squash){animation:slowDance .667s ease-in-out infinite alternate}
+    .duck-wrap.anim-sway-slow:not(.squash){animation:romanticToast 2.2s steps(7) infinite}
+    .duck-wrap.anim-spin:not(.squash){animation:slowSpin 4s steps(16) infinite}
+    .duck-wrap.anim-nod:not(.squash){animation:meetingNod 2.7s steps(6) infinite}
+    .duck-wrap.anim-buzz:not(.squash){animation:coffeeBuzz .12s steps(2) infinite}
+    .duck-wrap.anim-calm:not(.squash){animation:idle 3.2s steps(5) infinite}
+    .duck-wrap.anim-bounce:not(.squash){animation:hop .6s steps(4) infinite}
+    .duck-wrap.anim-tango:not(.squash){animation:tango 1.2s steps(4) infinite}
+    .duck-wrap.anim-shy:not(.squash){animation:shy 2.4s steps(6) infinite}
+    .duck-wrap.melting:not(.squash){animation:none}
+    /* Efeitos de cena */
+    .stage .props-layer{inset:0}
+    .fx{position:absolute;inset:0;pointer-events:none}
+    .fx-hearts img{position:absolute;left:var(--x);bottom:18%;width:calc(var(--px,5px)*7*var(--s));image-rendering:pixelated;opacity:0;animation:floatUp var(--t) linear var(--d) infinite}
+    .fx-sparkles i{position:absolute;left:var(--x);top:var(--y);font-style:normal;color:#fff6b9;font-size:20px;text-shadow:0 0 6px #ffe98a;opacity:0;animation:twinkle 1.6s steps(4) var(--d) infinite}
+    .fx-petals img,.fx-petals i{position:absolute;left:var(--x);top:-20px;width:calc(var(--px,5px)*3);height:calc(var(--px,5px)*3);image-rendering:pixelated;background:var(--c,transparent);animation:fall var(--t) linear var(--d) infinite}
+    .fx-notes{left:50%;top:22%;inset:auto;width:0;height:0}.fx-notes i{position:absolute;font-style:normal;color:#ffd7f0;font-size:28px;text-shadow:2px 2px 0 #3c102d;opacity:0;animation:noteRise 2.4s steps(8) var(--d) infinite;transform:translateX(var(--x))}
+    .fx-smoke{background:linear-gradient(#1a1414 0,#2a2020cc 18%,#3a2a2066 36%,transparent 55%);opacity:calc(var(--fire,0)*1);animation:smoke 3s ease-in-out infinite alternate}.fx-smoke.light{background:linear-gradient(#2a2a2acc,transparent 40%);opacity:.6}
+    .fx-email{inset:auto;left:var(--desk-x,80%);top:var(--desk-y,50%);transform:translate(-50%,-130%);background:#fff4cf;color:#b3203f;border:3px solid #140e2d;box-shadow:3px 3px 0 #140e2d;padding:3px 8px;font-size:18px;white-space:nowrap;animation:emailPing .5s steps(2) infinite}
+    .fx-spot{background:conic-gradient(from 180deg at 50% -10%,transparent 0 160deg,#ff5fa833 170deg,transparent 180deg,#a747ff33 190deg,transparent 200deg);mix-blend-mode:screen;animation:spotSwing 3s ease-in-out infinite alternate;transform-origin:50% 0}
+    .fx-mirror{inset:auto;right:7%;bottom:30%;width:min(19%,150px);aspect-ratio:3/5;background:linear-gradient(135deg,#9fd0ff 0,#5a7ab8 55%,#3a4a80);border:calc(var(--px,5px)*2) solid #c9a24a;box-shadow:0 0 0 calc(var(--px,5px)*.8) #3a2410,0 0 30px #9fd0ff44;overflow:hidden;display:grid;place-items:end center}
+    .fx-mirror img{width:120%;margin-bottom:-6%;transform:scaleX(-1);opacity:.75;image-rendering:pixelated;filter:saturate(.7) brightness(1.1) hue-rotate(-10deg)}
+    .fx-mirror:after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 30%,#ffffff55 32%,transparent 36%,transparent 44%,#ffffff33 46%,transparent 49%);animation:sheen 3s steps(6) infinite}
+    .fx-tie{inset:auto;left:44%;top:40%;width:calc(var(--px,5px)*5*1.6);image-rendering:pixelated;animation:tieFly 2.4s steps(10) forwards}
+    .fx-bigheart{inset:auto;left:50%;top:40%;width:calc(var(--px,5px)*7*3);image-rendering:pixelated;transform:translateX(-50%);animation:bigHeart 3s steps(12) forwards}
+    .thrown-rose{position:absolute;z-index:30;width:calc(var(--px,5px)*13*.8);image-rendering:pixelated;pointer-events:none;animation:throwRose 1.05s cubic-bezier(.2,.7,.3,1) forwards}
+    .candle{right:auto;bottom:auto;left:var(--table-x,82%);top:var(--table-y,62%);translate:-50% -94%;width:clamp(48px,7vw,76px);height:auto}.stage[data-props~="candle"] .candle{animation:candleFlicker 1.1s steps(4) infinite}
+    .stage.shake{animation:stageShake .4s steps(6)}
+    .stage.flash .scene-transition{background:#fff;animation:flash .45s steps(4)}
+    .action.active{box-shadow:0 1px 0 #140e2d,0 0 0 3px #fff4cf}.action.active:after{content:"▶";position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:12px;animation:cursor .8s steps(1) infinite}
+    .stage:not([data-mood]) .action{animation:ctaPulse 1.4s steps(2) infinite}.stage:not([data-mood]) .action:nth-child(2){animation-delay:.35s}.stage:not([data-mood]) .action:nth-child(3){animation-delay:.7s}.stage:not([data-mood]) .action:nth-child(4){animation-delay:1.05s}
+    .hint{color:#fff0c4}
+    /* Mini intro */
+    .top-btns{display:flex;gap:8px}#openIntro{font:18px "Press Start 2P";padding:0}
+    .intro-card{width:min(100%,520px);padding:18px}
+    .intro-head{display:flex;align-items:center;gap:12px}.intro-duck{width:74px;image-rendering:pixelated;animation:hop .9s steps(4) infinite}
+    .intro h2{font:17px/1.4 "Press Start 2P";margin:0 0 4px}.intro-sub{margin:0;font-size:19px;color:#d9cdee}
+    .intro-steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px;font-size:18px;line-height:1.1}
+    .intro-steps li{background:#211943;border:3px solid #130d2d;padding:8px 10px}.intro-steps b{color:#ffd84a;font-weight:normal}
+    .intro-chips{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
+    .chip{text-align:left;cursor:pointer;font-family:inherit;border:3px solid #140e2d;box-shadow:0 3px 0 #140e2d;color:#302244;padding:5px 7px;font-size:16px;font-weight:bold}.chip small{display:block;font-weight:normal;font-size:15px}
+    .chip:hover{filter:brightness(1.08)}.chip:active{transform:translateY(3px);box-shadow:none}.chip.heart{background:#ffc2d8}.chip.work{background:#b9eff0}.chip.naughty{background:#ffd994}.chip.romantico{background:#d99ab5;color:#3c1735}
+    .intro-dots{display:inline-flex;gap:4px;vertical-align:middle}.intro-dots i{width:9px;height:9px;border:2px solid #8c7fae}.intro-dots i.on{background:#ffd36b;border-color:#4a284d}
+    .intro-go{width:100%;margin-top:14px;border:3px solid #140e2d;background:#ffd84a;color:#302244;padding:12px;box-shadow:0 5px 0 #140e2d;font:15px "Press Start 2P";cursor:pointer;animation:ctaPulse 1.4s steps(2) infinite}.intro-go:active{transform:translateY(4px);box-shadow:0 1px 0 #140e2d}
+    .intro-keys{margin:10px 0 0;text-align:center;color:#a99cc8;font-size:15px}
+    @media(max-width:700px){.intro-card{padding:12px}.intro-duck{width:56px}.intro h2{font-size:14px}.intro-steps{font-size:16px}.chip{font-size:14px}.chip small{font-size:13px}.intro-keys{display:none}}
+    @media(max-height:680px){.intro-card{padding:12px}.intro-steps{gap:6px;margin-top:10px;font-size:16px}.intro-steps li{padding:5px 8px}.intro-duck{width:48px}.intro-sub{font-size:16px}.intro-go{margin-top:10px;padding:9px}.intro-keys{margin-top:6px}}
+    @keyframes fireFlicker{50%{opacity:.75}}
+    @keyframes slowSpin{0%,100%{transform:scaleX(1)}25%{transform:scaleX(.2) translateY(-4px)}50%{transform:scaleX(-1)}75%{transform:scaleX(-.2) translateY(-4px)}}
+    @keyframes hop{0%,100%{transform:translateY(0) scale(1.04,.96)}50%{transform:translateY(-16px) scale(.97,1.03)}}
+    @keyframes tango{0%,100%{transform:rotate(-6deg) translateX(-6px)}50%{transform:rotate(6deg) translateX(6px)}}
+    @keyframes shy{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg) translateY(2px)}}
+    @keyframes bouquetBob{0%,100%{transform:rotate(10deg)}50%{transform:rotate(4deg) translateY(-3%)}}
+    @keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(var(--s))}15%{opacity:.85}100%{opacity:0;transform:translateY(-320px) translateX(20px) scale(var(--s))}}
+    @keyframes twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1.2)}}
+    @keyframes fall{0%{transform:translateY(0) rotate(0)}100%{transform:translateY(110vh) translateX(40px) rotate(var(--r))}}
+    @keyframes noteRise{0%{opacity:0;transform:translate(var(--x),0)}20%{opacity:1}100%{opacity:0;transform:translate(calc(var(--x) + 30px),-90px)}}
+    @keyframes smoke{to{transform:translateY(8px)}}
+    @keyframes emailPing{50%{transform:translate(-50%,-140%)}}
+    @keyframes spotSwing{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+    @keyframes sheen{0%,60%{transform:translateX(-60%)}100%{transform:translateX(60%)}}
+    @keyframes tieFly{0%{transform:translate(0,0) rotate(0)}60%{transform:translate(60px,-190px) rotate(540deg)}100%{transform:translate(90px,-150px) rotate(720deg);opacity:.9}}
+    @keyframes bigHeart{0%{opacity:0;transform:translate(-50%,40px) scale(.4)}20%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-260px) scale(1.4)}}
+    @keyframes throwRose{0%{transform:translate(-50%,-50%) scale(1) rotate(0)}60%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) translate(-50px,40px) scale(2.3) rotate(-25deg)}}
+    .duck-wrap:focus:not(:focus-visible){outline:none}.duck-wrap:focus-visible{outline:3px dashed #fff4cf88;outline-offset:6px}
+    @keyframes stageShake{0%,100%{transform:translate(0,0)}20%{transform:translate(-6px,3px)}40%{transform:translate(5px,-4px)}60%{transform:translate(-4px,-2px)}80%{transform:translate(3px,4px)}}
+    @keyframes flash{0%{opacity:.85}100%{opacity:0}}
+    @keyframes ctaPulse{50%{transform:translateY(-4px);box-shadow:0 9px 0 #140e2d}}
+    @media(max-width:700px){.duck-wrap{height:auto;min-height:0}.fx-mirror{right:4%;bottom:34%;width:26%}.fx-notes i{font-size:22px}.action.active:after{display:none}}
   </style>
 </head>
 <body>
   <main class="shell">
     <section class="stage" aria-label="Patinho interativo">
+      <canvas class="backdrop" id="backdrop" aria-hidden="true"></canvas>
+      <canvas class="fire" id="fireCanvas" aria-hidden="true"></canvas>
       <div class="light-layer" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
-      <header class="top"><h1 class="brand">PATINHO<br>DE BOLSO</h1><button class="icon-btn" id="sound" aria-label="Desativar som" title="Som">♪</button></header>
+      <header class="top"><h1 class="brand">PATINHO<br>DE BOLSO</h1><div class="top-btns"><button class="icon-btn" id="openIntro" aria-label="Como brincar" title="Como brincar">?</button><button class="icon-btn" id="sound" aria-label="Desativar som" title="Som">♪</button></div></header>
       <section class="hud" aria-label="Progresso do jogo">
         <button class="panel" id="openAlbum" aria-label="Abrir álbum de reações"><div class="tiny">ÁLBUM</div><div class="count"><span id="foundCount">0</span> / <span id="albumTotal">0</span> reações</div></button>
         <div class="panel"><div class="tiny">HUMOR · <span id="moodLabel">curioso</span></div><div class="bar" role="progressbar" aria-label="Humor do patinho" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><div class="fill"></div></div></div>
@@ -56,7 +144,10 @@
       <img class="candle" src="assets/vela.png" alt="" aria-hidden="true">
       <div class="mood-note" aria-hidden="true">♪ modo romântico</div>
       <div class="duck-wrap idle" id="duck" role="button" tabindex="0" aria-label="Fazer carinho no patinho">
+        <div class="held back" id="heldBack" aria-hidden="true"></div>
         <img class="duck" id="duckSprite" src="assets/patinho.png" alt="Patinho amarelo em pixel art">
+        <canvas class="melt" id="meltCanvas" aria-hidden="true"></canvas>
+        <div class="held front" id="heldFront" aria-hidden="true"></div>
         <img class="duck-reflection" id="duckReflection" src="assets/patinho.png" alt="" aria-hidden="true">
         <div class="facefx"></div><div class="accessory"></div><span class="zzz">Zzz</span>
       </div>
@@ -85,8 +176,29 @@
   <section class="album" id="album" role="dialog" aria-modal="true" aria-labelledby="albumTitle">
     <div class="album-card"><div class="album-head"><h2 id="albumTitle">ÁLBUM DE REAÇÕES</h2><button class="icon-btn" id="closeAlbum" aria-label="Fechar álbum">×</button></div><div class="grid" id="albumGrid"></div><button class="reset" id="reset">RECOMEÇAR PROGRESSO</button></div>
   </section>
-  <script src="sprites.js?v=20260922-2"></script>
-  <script src="music.js?v=20260922-4"></script>
-  <script src="game.js?v=20260922-5"></script>
+  <section class="album intro" id="intro" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="album-card intro-card">
+      <div class="intro-head"><img src="assets/patinho.png" alt="" class="intro-duck"><div><h2 id="introTitle">COMO BRINCAR</h2><p class="intro-sub">Piu! Eu sou o patinho. Cada botão conta uma historinha minha.</p></div></div>
+      <ol class="intro-steps">
+        <li><b>1. Escolha uma historinha</b>
+          <div class="intro-chips">
+            <button class="chip heart" data-start="heart">♥ CORAÇÃO<small>eu derreto de amor</small></button>
+            <button class="chip work" data-start="work">▣ TRABALHO<small>o escritório pega fogo</small></button>
+            <button class="chip naughty" data-start="naughty">✦ SAFADO<small>chego com flores</small></button>
+            <button class="chip romantico" data-start="romantico">🍷 ROMÂNTICO<small>um encontro comigo</small></button>
+          </div>
+        </li>
+        <li><b>2. Aperte o MESMO botão de novo</b> pra ver a próxima cena. As bolinhas <span class="intro-dots"><i class="on"></i><i class="on"></i><i></i><i></i></span> mostram onde você está.</li>
+        <li><b>3. Toque em mim e nas coisas da cena</b>: no fogo, no buquê, na taça... A dica de cada cena aparece embaixo dos botões 👇</li>
+        <li><b>4. Troque de historinha pro ♥</b> e descubra 3 momentos secretos ★</li>
+      </ol>
+      <button class="intro-go" id="closeIntro">BORA! ▶</button>
+      <p class="intro-keys">No teclado: 1 2 3 4 · Enter responde o convite</p>
+    </div>
+  </section>
+  <script src="sprites.js?v=20260922-3"></script>
+  <script src="music.js?v=20260922-8"></script>
+  <script src="scenes.js?v=20260922-1"></script>
+  <script src="game.js?v=20260922-8"></script>
 </body>
 </html>
